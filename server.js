@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // const server = http.createServer((req,res)=>{
 
 //   console.log("url "+ req.url)
@@ -100,3 +101,10 @@ const server = http.createServer((req, res) => {
 server.listen(3000, () => {
     console.log('Server is listening on port 3000');
 });
+=======
+const{add,sub,mul,div}=require('./cal');
+console.log(add(10,5));
+console.log(sub(10,5));
+console.log(mul(10,5));
+console.log(div(10,0));
+>>>>>>> cc4e7cd0acd48ea5b76306f22edaa8b3ed504833
