@@ -1,0 +1,62 @@
+const express =require("express");
+const app = express();
+const port=3000;
+const userData=require("./data")
+
+app.get("/",(req,res)=>{
+    res.send("hello world")
+})
+
+app.get("/user",(req,res)=>{
+    res.send("user route")
+})
+
+app.get("/userdetail",(req,res)=>{
+    //send json data
+    res.status(200).json({name:'tamanna'})
+})
+
+app.get("/about",(req,res)=>{
+    res.send("about route")
+})
+
+app.get("/contact",(req,res)=>{
+    res.send("contact route")
+})
+
+app.get("/help",(req,res)=>{
+    res.send("help route")
+})
+
+app.get("/data",(req,res)=>{
+    const data = {
+        id:1,  
+        name:"tamanna",
+    }
+    res.status(200).json(data)
+})
+
+app.get("/items",(req,res)=>{
+    const items = [
+        {id:1, name:"item1"},       
+        {id:2, name:"item2"},
+        {id:3, name:"item3"},
+    ]
+    res.status(200).json(items)
+})          
+
+app.get("/users/:id",(req,res)=>{
+    res.send(`get user id ${req.params.id}`);
+})
+
+app.get("/products/:category/:id",(req,res)=>{
+    res.send(`get product category ${req.params.category} and id ${req.params.id}`);
+
+})
+app.delete("/users/:id",(req,res)=>{
+    res.send(`delete user id ${req.params.id}`);
+})
+
+app.listen(3000,()=>{
+    console.log("server is running")
+})
