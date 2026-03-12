@@ -1,86 +1,104 @@
-import express from 'express';
-import methodOverride from 'method-override';
+import express from "express";
+import methodOverride from "method-override";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+
 const app = express();
 
-app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true })); // to parse form data
-app.use(methodOverride('_method')); // to support PUT and DELETE methods
-//static server
-//csr = client side rendering
-//ssr = server side rendering - seo friendly (search engine optimization) fast than csr
-//template engine
-//ejs , pug , hbs
-//react = csr 
-//ejs - template engine runs dynamic html pages on server side (with help of express js)
+// __dirname fix (ES module)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.get('/', (req, res) => {
-    res.render('index');
-});
+// middleware
+app.set("view engine", "ejs");
+app.use(methodOverride("_method"));
+app.use(express.urlencoded({ extended: true }));
 
-// app.get('/user', (req, res) => {
-//     //binding data to ejs template
-//     let userData = { 
-//         name: 'John Doe',
-//         age: 30,
-//     };
-//     res.render('user',{userData});
-// });
-let userData =[ 
-    {id: 1, name: 'John Doe',age: 30},
-    {id: 2, name: 'Jane Smith',age: 25},
-    {id: 3, name: 'Mike Johnson',age: 35},
+// public folder static
+app.use(express.static(path.join(__dirname, "public")));
+
+// dummy user data
+let userData = [
+  { id: 1, name: "amit", age: 23 },
 ];
 
-app.get('/user', (req, res) => {
-    res.render('user',{userData});    
+// HOME route - pagination (10 images per page)
+app.get("/", (req, res) => {
+  const imageFolder = path.join(__dirname, "public");
+  const images = fs.readdirSync(imageFolder);
+
+  const page = parseInt(req.query.page) || 1;
+  const limit = 10;
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const paginatedImages = images.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(images.length / limit);
+
+  res.render("index", {
+    images: paginatedImages,
+    currentPage: page,
+    totalPages: totalPages,
+  });
 });
 
-app.post('/api/user', (req, res) => {
-    const { name, age } = req.body;
-    let newUserData={
-        id: userData.length + 1,
-        name,
-        age,
-    }
-    userData.push(newUserData);
-    res.redirect('/user');
+// render edit page
+app.get("/editpage/:id", (req, res) => {
+  const id = req.params.id;
+  const user = userData.find((ele) => ele.id == id);
+
+  if (!user) return res.send("User not found");
+
+  res.render("edit", { userData: [user] });
 });
 
+// get user list
+app.get("/user", (req, res) => {
+  res.render("user", { userData });
+});
+
+// add user
+app.post("/api/user", (req, res) => {
+  const { name, age } = req.body;
+
+  let newUserData = {
+    id: userData.length + 1,
+    name,
+    age,
+  };
+
+  userData.push(newUserData);
+  res.redirect("/user");
+});
+
+// delete user
 app.delete("/api/user/:id", (req, res) => {
-    const userId = parseInt(req.params.id);
-    const useridx = userData.findIndex(u => u.id === userId);
-    if (useridx === -1) {
-        return res.send("User not found");
-    }
-    userData.splice(useridx, 1);
-    res.redirect('/user'); 
+  const userid = req.params.id;
+  const useridx = userData.findIndex((ele) => ele.id == userid);
+
+  if (useridx === -1) return res.send("user not found");
+
+  userData.splice(useridx, 1);
+  res.redirect("/user");
 });
 
-app.get('/list', (req, res) => {
-    let arr=["apple","banana","grapes","mango"];
-    res.render('list', { arr });
-});
-app.put('/api/user/:id',(req,res)=>{
-    const {name ,age}=req.body;
-    const id=parseInt(req.params.id);
-    const useridx = userData.findIndex(u => u.id === id);
-    if (useridx === -1) {
-        return res.send("User not found");
-    }
-    userData[useridx]={name,age,id};
-    res.redirect('/user');
+// update user
+app.put("/api/user/:id", (req, res) => {
+  const userid = req.params.id;
+  const { name, age } = req.body;
 
-})
+  const user = userData.find((ele) => ele.id == userid);
+  if (!user) return res.send("user not found");
 
+  user.name = name;
+  user.age = age;
 
-
-
-
-
-app.use((req, res) => {
-    res.status(404).render('404');
+  res.redirect("/user");
 });
 
+// server start
 app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+  console.log("server is running on http://localhost:3000");
 });

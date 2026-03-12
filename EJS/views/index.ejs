@@ -1,20 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
+  <title>Image Gallery</title>
+  <style>
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    img {
+      width: 150px;
+      cursor: pointer;
+      border: 2px solid black;
+    }
+  </style>
 </head>
 <body>
-    <h1>Edit User</h1>
-    <form action="/api/user/<%= userData[0].id %>?_method=PUT" method="POST">
-    <input type="text" name="name" value="<%= userData[0].name %>" required>
-    <br>
-    <input type="number" name="age" value="<%= userData[0].age %>" required>
-    <br>
-    <button type="submit">Update User</button>
-    <br>
-    <a href="/user">back</a>
-    </form>
+
+<h1>Images</h1>
+
+<div class="gallery">
+  <% images.forEach((img, index) => { %>
+    <% if(index === 0 && currentPage < totalPages) { %>
+      <!-- first image = next page -->
+      <a href="/?page=<%= currentPage + 1 %>">
+        <img src="/<%= img %>" alt="image">
+      </a>
+    <% } else { %>
+      <img src="/<%= img %>" alt="image">
+    <% } %>
+  <% }) %>
+</div>
+
+<br><br>
+
+<!-- navigation -->
+<div>
+  <% if(currentPage > 1) { %>
+    <a href="/?page=<%= currentPage - 1 %>">⬅ Prev</a>
+  <% } %>
+
+  &nbsp;&nbsp; Page <%= currentPage %> of <%= totalPages %> &nbsp;&nbsp;
+
+  <% if(currentPage < totalPages) { %>
+    <a href="/?page=<%= currentPage + 1 %>">Next ➡</a>
+  <% } %>
+</div>
+
 </body>
 </html>
