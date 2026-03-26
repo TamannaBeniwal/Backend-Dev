@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+<h2>Edit Employee</h2>
+
+<form method="POST" action="/update/<%= employee.id %>">
+
+   
+    <label>Name</label>
+    <input type="text" name="name" value="<%= employee.name || '' %>" required>
+
+    <br><br>
+
+   
+    <label>Department</label><br>
+
+    <input type="checkbox" name="department" value="HR"
+    <%= employee.department?.includes("HR") ? "checked" : "" %>> HR
+
+    <input type="checkbox" name="department" value="Sales"
+    <%= employee.department?.includes("Sales") ? "checked" : "" %>> Sales
+
+    <input type="checkbox" name="department" value="Finance"
+    <%= employee.department?.includes("Finance") ? "checked" : "" %>> Finance
+
+    <input type="checkbox" name="department" value="Engineer"
+    <%= employee.department?.includes("Engineer") ? "checked" : "" %>> Engineer
+
+    <br><br>
+
+    <label>Salary</label>
+    <input type="number" name="basicSalary" value="<%= employee.basicSalary || '' %>">
+
+    <br><br>
+
+ 
+    <label>Joining Date</label>
+    <input type="date" name="joiningDate"
+    value="<%= employee.joiningDate ? new Date(employee.joiningDate).toISOString().split('T')[0] : '' %>">
+
+    <br><br>
+
+    <button type="submit" class="btn btn-update">
+        Update Employee
+    </button>
+
+</form>
+
+<%- include('../partials/footer') %>
+    
+</body>
+</html>

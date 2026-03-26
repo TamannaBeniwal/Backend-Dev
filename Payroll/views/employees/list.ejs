@@ -1,0 +1,65 @@
+<%- include('../partials/header') %>
+
+
+<a href="/add" class="btn btn-add">Add Employee</a>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Avatar</th>   <!-- NEW -->
+        <th>Name</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th>Joining Date</th>
+        <th>Action</th>
+    </tr>
+
+    <% if (employees.length === 0) { %>
+        <tr>
+            <td colspan="6" style="text-align:center;">
+                No Employees Found
+            </td>
+        </tr>
+    <% } %>
+
+    <% employees.forEach(emp => { %>
+        <tr>
+
+           
+            <td>
+                <% if (emp.profileImage) { %>
+                    <img 
+                        src="<%= emp.profileImage %>" 
+                        width="60" 
+                        height="60" 
+                        style="border-radius:50%; object-fit:cover;">
+                <% } else { %>
+                    No Image
+                <% } %>
+            </td>
+
+            <td><%= emp.name %></td>
+            <td><%= emp.department %></td>
+            <td><%= emp.basicSalary %></td>
+            <td><%= emp.joiningDate %></td>
+
+            <td>
+                <div class="action-buttons">
+
+                    <a href="/edit/<%= emp.id %>" class="btn btn-edit">
+                        Edit
+                    </a>
+
+                    <form action="/delete/<%= emp.id %>" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-delete">
+                            Delete
+                        </button>
+                    </form>
+
+                </div>
+            </td>
+        </tr>
+    <% }) %>
+
+</table>
+
+<%- include('../partials/footer') %>

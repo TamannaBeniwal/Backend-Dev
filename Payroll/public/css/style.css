@@ -1,0 +1,78 @@
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 10px;
+  border: 1px solid gray;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 5px;
+  cursor: pointer;
+}
+.tag {
+  background: #d8f3a4;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+/* Common Button Style */
+.btn {
+  display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s ease;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Edit Button */
+.btn-edit {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #2980b9;
+}
+
+/* Delete Button */
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+.btn-add{
+    background-color: #1a9a47;
+    color: white;
+}
+
+.btn-add:hover {
+    background-color: #46a828;
+}
+.btn-update {
+    background-color: #d3de56;
+}
+
+.btn-update:hover {
+    background-color: #1e8449;
+    transform: scale(1.05);
+}

@@ -1,0 +1,110 @@
+<%- include('../partials/header') %>
+
+<form method="POST" action="/add">
+
+<h3>Employee Payroll Form</h3>
+
+<!-- Name -->
+<label>Name</label>
+<input type="text" name="name" required>
+
+<br><br>
+
+<!-- Profile Image -->
+
+
+<h4>Profile Image</h4>
+
+<div class="avatar-group">
+
+<label>
+<input type="radio" name="profileImage"
+value="https://www.svgrepo.com/show/446531/avatar.svg">
+
+<img src="https://www.svgrepo.com/show/446531/avatar.svg"
+class="avatar">
+</label>
+
+
+<label>
+<input type="radio" name="profileImage"
+value="https://www.svgrepo.com/show/446529/avatar.svg">
+
+<img src="https://www.svgrepo.com/show/446529/avatar.svg"
+class="avatar">
+</label>
+
+
+<label>
+<input type="radio" name="profileImage"
+value="https://www.svgrepo.com/show/446522/avatar-portrait.svg">
+
+<img src="https://www.svgrepo.com/show/446522/avatar-portrait.svg"
+class="avatar">
+</label>
+
+
+<label>
+<input type="radio" name="profileImage"
+value="https://www.svgrepo.com/show/446527/avatar.svg">
+
+<img src="https://www.svgrepo.com/show/446527/avatar.svg"
+class="avatar">
+</label>
+
+</div>
+
+
+<br><br>
+
+<!-- Gender -->
+<h4>Gender</h4>
+
+<input type="radio" name="gender" value="Male"> Male
+<input type="radio" name="gender" value="Female"> Female
+
+<br><br>
+
+<!-- Department -->
+<!-- Department -->
+<h4>Department</h4>
+
+<input type="checkbox" name="department[]" value="HR"> HR
+<input type="checkbox" name="department[]" value="Sales"> Sales
+<input type="checkbox" name="department[]" value="Finance"> Finance
+<input type="checkbox" name="department[]" value="Engineer"> Engineer
+
+<br><br>
+
+
+<br><br>
+
+<!-- Salary -->
+<h4>Salary</h4>
+
+<select name="basicSalary">
+<option value="10000">10000</option>
+<option value="20000">20000</option>
+<option value="30000">30000</option>
+<option value="40000">40000</option>
+</select>
+
+<br><br>
+
+<!-- Joining Date -->
+<label>Joining Date</label>
+<input type="date" name="joiningDate">
+
+<br><br>
+
+<!-- Notes -->
+<label>Notes</label>
+<textarea name="notes"></textarea>
+
+<br><br>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<%- include('../partials/footer') %>
